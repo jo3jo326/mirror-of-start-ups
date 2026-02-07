@@ -1,3 +1,62 @@
+.gridWrapNoCard {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2em 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5em;
+  justify-items: center;
+  align-items: start;
+}
+.startupBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  box-shadow: none;
+  padding: 0 0 2em 0;
+}
+.nameBig {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #18181b;
+  text-align: center;
+  margin-bottom: 0.7em;
+  margin-top: 0.2em;
+}
+.logoSquareWrap {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f1f5f9;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+.logoSquareImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+}
+.detailsBtn {
+  margin: 0.5em 0 1em 0;
+  padding: 0.5em 1.5em;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.detailsBtn:hover {
+  background: #38bdf8;
+}
 .titleCenter {
   font-size: 1.2em;
   font-weight: bold;
@@ -150,7 +209,7 @@
 }
 .value {
   flex: 1;
-  color: #fff;
+  color: #18181b;
   font-size: 0.98em;
   word-break: break-word;
 }
