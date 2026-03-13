@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/FeaturedStartups.module.css";
+import Modal from "./Modal";
+import StartupDetails from "./StartupDetails";
 
 interface Startup {
   id: string;
@@ -17,7 +19,9 @@ interface FeaturedStartupsProps {
 }
 
 const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
-  // Removed openDetails state for modal implementation
+  // Modal state for showing startup details
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
 
   // Runtime check for duplicate IDs
   const [duplicateIds, setDuplicateIds] = useState<string[]>([]);
@@ -39,9 +43,9 @@ const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
   const startupsReversed = [...startups].reverse();
   return (
     <>
-      {duplicateIds.length > 0 && (
-        {/* Removed duplicate ID warning for expand/collapse logic */}
-      )}
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        {selectedStartup && <StartupDetails startup={selectedStartup} />}
+      </Modal>
       <div className={styles.featuredGrid}>
         {startupsReversed.map((startup, idx) => (
           <div className={styles.startupCard} key={startup.id || idx}>
@@ -63,7 +67,9 @@ const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
               )}
             </div>
             <div className={styles.startupDetails}>
-              {/* Details button and expand/collapse section removed for modal implementation */}
+              <button className={styles.detailsBtn} onClick={() => { setSelectedStartup(startup); setModalOpen(true); }}>
+                Details
+              </button>
             </div>
           </div>
         ))}
