@@ -17,7 +17,7 @@ interface FeaturedStartupsProps {
 }
 
 const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
-  const [openDetails, setOpenDetails] = useState<string | null>(null);
+  // Removed openDetails state for modal implementation
 
   // Runtime check for duplicate IDs
   const [duplicateIds, setDuplicateIds] = useState<string[]>([]);
@@ -40,9 +40,7 @@ const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
   return (
     <>
       {duplicateIds.length > 0 && (
-        <div style={{ color: 'red', fontWeight: 'bold', marginBottom: '1em', textAlign: 'center' }}>
-          Warning: Duplicate startup IDs detected: {duplicateIds.join(', ')}. This can cause multiple cards to expand at once. Please ensure all startups have unique IDs.
-        </div>
+        {/* Removed duplicate ID warning for expand/collapse logic */}
       )}
       <div className={styles.featuredGrid}>
         {startupsReversed.map((startup, idx) => (
@@ -65,25 +63,7 @@ const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
               )}
             </div>
             <div className={styles.startupDetails}>
-              <button className={styles.detailsBtn} onClick={() => setOpenDetails(openDetails === startup.id ? null : startup.id)}>
-                {openDetails === startup.id ? 'Hide Details' : 'Details'}
-              </button>
-              <div className={openDetails === startup.id ? `${styles.detailsContent} ${styles.detailsContentOpen}` : styles.detailsContent}>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Description</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.description || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Category</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{Array.isArray(startup.categories) ? startup.categories.join(', ') : startup.category || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Problems</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{Array.isArray(startup.problems) ? startup.problems.join(', ') : startup.problems || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Stage</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.stage || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Team</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{Array.isArray(startup.team) ? startup.team.join(', ') : startup.team || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Funding Needs</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.fundingNeeds || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Pitch Deck URL</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.pitchDeckUrl || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Pitch Video URL</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.pitchVideoUrl || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Demo URL</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.demoUrl || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Revenue</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.revenue || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Phone</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.phone || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Email</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.email || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Social Media</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.socialMedia || '-'}</span></div>
-                <div className={styles.startupRow}><span className={styles.startupLabel}>Created At</span><span className={styles.startupColon}>:</span><span className={styles.startupValue}>{startup.createdAt ? new Date(startup.createdAt).toLocaleString() : '-'}</span></div>
-              </div>
+              {/* Details button and expand/collapse section removed for modal implementation */}
             </div>
           </div>
         ))}
