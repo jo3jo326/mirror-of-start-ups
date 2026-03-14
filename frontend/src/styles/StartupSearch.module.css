@@ -1,3 +1,39 @@
+.@media (max-width: 600px) {
+  .searchDropdownForm {
+    max-width: 98vw;
+    padding: 0 2vw;
+  }
+  .searchBoxRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5em;
+    padding: 0.3em 0.2em;
+  }
+  .searchBox {
+    font-size: 1em;
+    padding: 0.7em 0.7em;
+  }
+  .searchBtn, .dropdownToggle {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.3em;
+    font-size: 1em;
+  }
+  .dropdownPanel {
+    left: 0;
+    right: 0;
+    min-width: 0;
+    padding: 0.7em 0.5em 0.5em 0.5em;
+  }
+  .filterRow label {
+    min-width: 70px;
+    font-size: 0.98em;
+  }
+  .filterRow input {
+    font-size: 0.98em;
+    padding: 0.4em 0.5em;
+  }
+}
 
 .searchDropdownForm {
   width: 100%;
