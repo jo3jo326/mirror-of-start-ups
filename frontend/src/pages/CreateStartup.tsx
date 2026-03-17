@@ -96,9 +96,9 @@ export default function CreateStartup({ onCreated }: { onCreated?: () => void } 
         <input name="email" value={form.email} onChange={handleChange} placeholder="Email" type="email" required />
         <input name="socialMedia" value={form.socialMedia} onChange={handleChange} placeholder="Social Media Links (optional)" />
         <input name="fundingNeeds" value={form.fundingNeeds} onChange={handleChange} placeholder="Funding Needs" />
-        <input name="pitchDeckUrl" value={form.pitchDeckUrl} onChange={handleChange} placeholder="Pitch Deck URL" />
-        <input name="pitchVideoUrl" value={form.pitchVideoUrl} onChange={handleChange} placeholder="Pitch Video URL" />
-        <input name="demoUrl" value={form.demoUrl} onChange={handleChange} placeholder="Demo URL" />
+        <input name="pitchDeckUrl" value={form.pitchDeckUrl} onChange={handleChange} placeholder="Pitch Deck URL (optional)" />
+        <input name="pitchVideoUrl" value={form.pitchVideoUrl} onChange={handleChange} placeholder="Pitch Video URL (optional)" />
+        <input name="demoUrl" value={form.demoUrl} onChange={handleChange} placeholder="Demo URL (optional)" />
         <select name="revenue" value={form.revenue} onChange={handleChange} required>
           <option value="">Select Revenue</option>
           <option value="0">0 dollar</option>

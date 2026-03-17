@@ -1,3 +1,45 @@
+@media (max-width: 600px) {
+  .header {
+    background: linear-gradient(90deg, #18181b 60%, #2563eb 100%);
+    min-height: 90px;
+    padding: 0;
+    border-bottom: 1.5px solid #27272a;
+    box-shadow: 0 2px 16px rgba(24,24,27,0.08);
+  }
+  .headerContent {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1.2em 1em 1.2em 1em;
+    gap: 0.7em;
+  }
+  .logo {
+    font-size: 1.1em;
+    margin: 0 0 0.7em 0;
+    letter-spacing: 0.5px;
+    color: #fff;
+    font-weight: 800;
+  }
+  .nav {
+    flex-direction: column;
+    gap: 0.3em;
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 0.2em;
+  }
+  .nav a {
+    font-size: 0.98em;
+    padding: 0.18em 0.3em;
+    color: #e5e7eb;
+    background: transparent;
+    border-radius: 6px;
+    width: fit-content;
+  }
+  .nav a:hover {
+    color: #38bdf8;
+    background: #27272a;
+  }
+}
 .header {
   display: flex;
   align-items: center;
