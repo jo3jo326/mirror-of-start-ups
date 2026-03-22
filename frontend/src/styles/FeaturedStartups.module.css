@@ -1,6 +1,6 @@
 .startupImgWrapLarge {
-  width: 140px;
-  height: 140px;
+  width: 100%;
+  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,8 +94,8 @@
 .startupImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
+  object-fit: contain;
+  border-radius: 0;
 }
 .startupVideo {
   width: 100%;
