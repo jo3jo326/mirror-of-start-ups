@@ -1,7 +1,7 @@
 .detailsBtn {
-  background: #fff;
-  color: #2563eb;
-  border: 2px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+  border: none;
   border-radius: 6px;
   padding: 0.25em 0.9em;
   font-size: 0.98em;
@@ -16,7 +16,7 @@
   text-align: left;
 }
 .detailsBtn:hover {
-  background: #2563eb;
+  background: #1d4ed8;
   color: #fff;
 }
 .startupImgWrapLarge {
@@ -208,12 +208,21 @@
     padding: 0 0.2em;
   }
   .detailsBtn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
     min-width: 60px;
     max-width: 80px;
     font-size: 0.95em;
     padding: 0.18em 0.7em;
     margin-right: auto;
     margin-left: 0;
+    transition: background 0.2s, color 0.2s;
+  }
+  .detailsBtn:hover {
+    background: #1d4ed8;
+    color: #fff;
   }
   .playBtn {
     margin-top: 0;
