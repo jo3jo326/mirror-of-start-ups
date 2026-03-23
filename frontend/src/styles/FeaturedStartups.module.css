@@ -142,24 +142,31 @@
 @media (max-width: 600px) {
   .featuredGrid {
     grid-template-columns: 1fr;
-    gap: 1.1rem; /* more space between cards on mobile */
+    gap: 5.5rem; /* 5x the previous 1.1rem gap for much more space between cards */
     padding: 0.7rem 0;
   }
   .startupCard {
     min-width: 92vw;
     max-width: 98vw;
     border-radius: 12px;
-    aspect-ratio: 1 / 1; /* make card square on mobile */
+    aspect-ratio: 1 / 1; /* keep card square on mobile */
     min-height: unset;
     max-height: unset;
     height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* push details/play to bottom */
+    position: relative;
   }
   .startupImgWrapLarge {
     width: 100%;
-    height: 45vw; /* make image/logo fill horizontally, square card */
-    min-height: 90px;
-    max-height: 180px;
+    height: 65vw; /* stretch image/logo downward to almost touch details/play */
+    min-height: 120px;
+    max-height: 260px;
     border-radius: 10px;
+    margin-bottom: 0.2em;
+    display: flex;
+    align-items: flex-end;
   }
   .startupImgWrap, .startupVideoWrap {
     width: 40px;
@@ -168,5 +175,27 @@
   }
   .startupTitle {
     font-size: 0.98em;
+  }
+  .startupDetailsRow {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    gap: 0.5em;
+    margin-top: auto;
+    margin-bottom: 0.1em;
+  }
+  .startupDetails {
+    margin-top: auto;
+    margin-bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+  .playBtn {
+    margin-top: 0.5em;
+    margin-bottom: 0.1em;
+    align-self: stretch;
   }
 }
