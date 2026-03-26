@@ -30,13 +30,34 @@ const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
 
   // Show newest startups first
   const startupsReversed = [...startups].reverse();
+  // Helper to extract YouTube video ID from various URL formats
+  function getYouTubeId(url: string): string | null {
+    if (!url) return null;
+    // Accepts watch?v=, youtu.be/, shorts/, embed/, etc.
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+    return match ? match[1] : null;
+  }
+
   return (
     <>
       <Modal isOpen={modalOpen || !!videoUrl} onClose={() => { setModalOpen(false); setVideoUrl(null); }}>
         {modalOpen && selectedStartup && <StartupDetails startup={selectedStartup} />}
         {videoUrl && (
           <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <video src={videoUrl} controls autoPlay style={{ width: '100%', maxWidth: 420, borderRadius: 12, background: '#000', aspectRatio: '16/9', maxHeight: '320px' }} />
+            {getYouTubeId(videoUrl) ? (
+              <iframe
+                width="420"
+                height="236"
+                style={{ width: '100%', maxWidth: 420, borderRadius: 12, aspectRatio: '16/9', maxHeight: '320px', background: '#000' }}
+                src={`https://www.youtube.com/embed/${getYouTubeId(videoUrl)}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : (
+              <video src={videoUrl} controls autoPlay style={{ width: '100%', maxWidth: 420, borderRadius: 12, background: '#000', aspectRatio: '16/9', maxHeight: '320px' }} />
+            )}
           </div>
         )}
       </Modal>
@@ -59,9 +80,14 @@ const FeaturedStartups: React.FC<FeaturedStartupsProps> = ({ startups }) => {
               <button className={styles.detailsBtn} onClick={() => { setSelectedStartup(startup); setModalOpen(true); }}>
                 Details
               </button>
-              {startup.videoUrl && (
-                <button className={styles.playBtn} onClick={() => setVideoUrl(startup.videoUrl ?? null)}>
-                  ▶ Play
+              <div style={{ flex: 1 }} />
+              {(startup.videoUrl || startup.pitchVideoUrl) && (
+                <button
+                  className={styles.detailsBtn}
+                  style={{ marginLeft: 'auto' }}
+                  onClick={() => setVideoUrl(startup.videoUrl || startup.pitchVideoUrl || null)}
+                >
+                  ▶
                 </button>
               )}
             </div>

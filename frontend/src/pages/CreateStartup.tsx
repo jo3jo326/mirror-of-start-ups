@@ -54,7 +54,14 @@ export default function CreateStartup({ onCreated }: { onCreated?: () => void } 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error('Failed to create start-up');
+      if (!res.ok) {
+        let msg = 'Could not create start-up. Please try again.';
+        try {
+          const data = await res.json();
+          if (data && data.error) msg = data.error;
+        } catch {}
+        throw new Error(msg);
+      }
       setSuccess(true);
       setForm({
         name: '', description: '', category: '', problems: '', stage: '', team: '', fundingNeeds: '', pitchDeckUrl: '', pitchVideoUrl: '', demoUrl: '', revenue: '', phone: '', email: '', socialMedia: '', imageUrl: '', videoUrl: ''
@@ -63,8 +70,8 @@ export default function CreateStartup({ onCreated }: { onCreated?: () => void } 
       setTimeout(() => {
         navigate('/startups');
       }, 2000);
-    } catch {
-      setError('Could not create start-up. Please try again.');
+    } catch (err: any) {
+      setError(err?.message || 'Could not create start-up. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -97,7 +104,7 @@ export default function CreateStartup({ onCreated }: { onCreated?: () => void } 
         <input name="socialMedia" value={form.socialMedia} onChange={handleChange} placeholder="Social Media Links (optional)" />
         <input name="fundingNeeds" value={form.fundingNeeds} onChange={handleChange} placeholder="Funding Needs" />
         <input name="pitchDeckUrl" value={form.pitchDeckUrl} onChange={handleChange} placeholder="Pitch Deck URL (optional)" />
-        <input name="pitchVideoUrl" value={form.pitchVideoUrl} onChange={handleChange} placeholder="Pitch Video URL (optional)" />
+        <input name="pitchVideoUrl" value={form.pitchVideoUrl} onChange={handleChange} placeholder="Pitch Video YouTube URL (optional)" />
         <input name="demoUrl" value={form.demoUrl} onChange={handleChange} placeholder="Demo URL (optional)" />
         <select name="revenue" value={form.revenue} onChange={handleChange} required>
           <option value="">Select Revenue</option>
@@ -114,12 +121,7 @@ export default function CreateStartup({ onCreated }: { onCreated?: () => void } 
           type="image"
           onUpload={(url: string) => setForm(f => ({ ...f, imageUrl: url }))}
         />
-        <MediaUpload
-          label="Upload Pitch Video (1 min max)"
-          accept="video/*"
-          type="video"
-          onUpload={(url: string) => setForm(f => ({ ...f, videoUrl: url }))}
-        />
+        {/* Video upload removed. Use YouTube URL above. */}
         <button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create Start-up'}</button>
         {error && <div className={styles.error}>{error}</div>}
         {success && <div className={styles.success}>Start-up created successfully!</div>}

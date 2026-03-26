@@ -6,61 +6,42 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max for videos
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max for images
+  // Accept any image type (let Cloudinary handle validation)
   fileFilter: (req, file, cb) => {
-    const allowed = [
-      'image/jpeg', 'image/png', 'image/webp', 'image/jpg',
-      'video/mp4', 'video/webm', 'video/ogg'
-    ];
-    if (allowed.includes(file.mimetype)) cb(null, true);
+    if (file.mimetype.startsWith('image/')) cb(null, true);
     else cb(new Error('Invalid file type: ' + file.mimetype));
   },
 });
 
+// Only handle image uploads now
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
+    console.log('[UPLOAD] /api/media/upload called');
     if (!req.file) {
+      console.log('[UPLOAD] No file uploaded');
       return res.status(400).json({ error: 'No file uploaded' });
     }
-    const isVideo = req.file.mimetype.startsWith('video/');
-    let responded = false;
-    const timeoutMs = 60000; // 60 seconds
-    const timeout = setTimeout(() => {
-      if (!responded) {
-        responded = true;
-        res.status(504).json({ error: 'Cloudinary upload timed out' });
-      }
-    }, timeoutMs);
+    console.log('[UPLOAD] File received:', req.file.originalname, req.file.mimetype, req.file.size);
+    // Only allow images
     const uploadStream = cloudinary.uploader.upload_stream(
       {
-        resource_type: isVideo ? 'video' : 'image',
-        folder: isVideo ? 'startups/videos' : 'startups/images',
-        // transformation: { width: 800, crop: 'limit' }, // optional
+        resource_type: 'image',
+        folder: 'startups/images',
       },
       (error, result) => {
-        if (responded) {
-          return;
-        }
-        clearTimeout(timeout);
         if (error || !result) {
-          responded = true;
+          console.log('[UPLOAD] Cloudinary error:', error?.message, error);
           return res.status(500).json({ error: error?.message || 'Upload failed' });
         }
-        responded = true;
+        console.log('[UPLOAD] Cloudinary upload success:', result.secure_url);
         res.json({ url: result.secure_url, public_id: result.public_id });
       }
     );
-    uploadStream.on('error', (err) => {
-      if (!responded) {
-        responded = true;
-        clearTimeout(timeout);
-        res.status(500).json({ error: 'Cloudinary stream error: ' + err.message });
-      }
-    });
-    uploadStream.on('finish', () => {
-    });
     uploadStream.end(req.file.buffer);
+    console.log('[UPLOAD] File buffer sent to Cloudinary');
   } catch (err: any) {
+    console.log('[UPLOAD] Exception thrown:', err.message, err);
     res.status(500).json({ error: err.message });
   }
 });

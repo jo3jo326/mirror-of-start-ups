@@ -13,6 +13,19 @@ router.post('/', async (req, res) => {
     // Accept JSON only
     const data = req.body;
     const now = new Date();
+    // Validate YouTube URLs if provided
+    function isValidYouTubeUrl(url: string): boolean {
+      if (!url) return true;
+      // Accepts: watch?v=, youtu.be/, shorts/, embed/, and more
+      const ytRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|shorts\/)?([\w-]{11})([\?&].*)?$/;
+      return ytRegex.test(url);
+    }
+    if (data.pitchVideoUrl && !isValidYouTubeUrl(data.pitchVideoUrl)) {
+      return res.status(400).json({ error: 'Invalid YouTube URL for pitchVideoUrl' });
+    }
+    if (data.videoUrl && !isValidYouTubeUrl(data.videoUrl)) {
+      return res.status(400).json({ error: 'Invalid YouTube URL for videoUrl' });
+    }
     const startup = {
       id: new ObjectId().toString(),
       name: data.name || '',
@@ -23,14 +36,14 @@ router.post('/', async (req, res) => {
       team: data.team ? (Array.isArray(data.team) ? data.team : [data.team]) : [],
       fundingNeeds: data.fundingNeeds || '',
       pitchDeckUrl: data.pitchDeckUrl || '',
-      pitchVideoUrl: data.pitchVideoUrl || '',
+      pitchVideoUrl: data.pitchVideoUrl || '', // Now expects YouTube URL
       demoUrl: data.demoUrl || '',
       revenue: data.revenue || '',
       phone: data.phone || '',
       email: data.email || '',
       socialMedia: data.socialMedia || '',
       imageUrl: data.imageUrl || '',
-      videoUrl: data.videoUrl || '',
+      videoUrl: data.videoUrl || '', // Now expects YouTube URL
       createdAt: now,
       updatedAt: now,
       createdBy: '',

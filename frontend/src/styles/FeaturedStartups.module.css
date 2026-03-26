@@ -47,8 +47,10 @@
   font-size: 1em;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
-  margin-left: auto;
+  transition: background 0.2s, color 0.2s;
+  margin-left: 0;
+  text-align: center;
+  display: inline-block;
 }
 .playBtn:hover {
   background: #1d4ed8;
